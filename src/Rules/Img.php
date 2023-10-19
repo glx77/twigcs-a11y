@@ -7,7 +7,7 @@ use FriendsOfTwig\Twigcs\Rule\RuleInterface;
 use FriendsOfTwig\Twigcs\TwigPort\Token as TwigToken;
 use FriendsOfTwig\Twigcs\TwigPort\TokenStream;
 
-class LinkBlank extends AbstractRule implements RuleInterface
+class Img extends AbstractRule implements RuleInterface
 {
     /**
      * @var \FriendsOfTwig\Twigcs\Validator\Violation[]
@@ -47,10 +47,9 @@ class LinkBlank extends AbstractRule implements RuleInterface
                     }
                     $tokenIndex++;
                 }
-                $pattern = '/<a[^>]*\s+target="_blank"[^>]*>.*open_in_new<\/i>/i';
 
                 if (preg_match(
-                    '/<a[^>]*\s+target="_blank"[^>]*>.*open_in_new<\/i>/i',
+                    '/<img[^>]*\s+alt="[^"]*"/i',
                     $textToAnalyse,
                     $matches
                 )
@@ -64,7 +63,7 @@ class LinkBlank extends AbstractRule implements RuleInterface
                         $token->getLine(),
                         $token->getColumn(),
                         sprintf(
-                            '[Weglot.LinkBlank] Invalid \'link blank\'. Link with target blank must have the icon. Found `%1$s`.',
+                            '[Weglot.Img] Invalid \'Img alt\'. Img must have an explicit alt attribute Found. `%1$s`.',
                             trim($matches[0])
                         )
                     );
